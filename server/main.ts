@@ -9,8 +9,8 @@ const io = new Server({
 });
 
 const TICK_RATE = 1000 / 60;
+const MAX_TICKS = 60;
 let tick = 0;
-let lastTickTime = Date.now();
 
 const gameState = {
   time: new Date().toISOString(),
@@ -18,19 +18,13 @@ const gameState = {
 };
 
 function gameLoop() {
-  const now = Date.now();
-  lastTickTime = now;
-
-  tick++;
+  tick = (tick + 1) % MAX_TICKS;
   gameState.tick = tick;
   gameState.time = new Date().toISOString();
 
   io.emit("gameState", gameState);
 
-  const nextTickTime = lastTickTime + TICK_RATE;
-  const timeout = Math.max(0, nextTickTime - Date.now());
-  
-  setTimeout(gameLoop, timeout);
+  setTimeout(gameLoop, TICK_RATE);
 }
 
 io.on("connection", (socket) => {
