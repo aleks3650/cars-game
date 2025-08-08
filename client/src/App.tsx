@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-      <h1>Hello world!</h1>
+      <h1>Hello world!!</h1>
       {isConnected && <h2>Twoje ID: {socketId}</h2>}
       {tick && <h3>Tick: {tick}</h3>}
       {time && <h3>Time: {time}</h3>}
